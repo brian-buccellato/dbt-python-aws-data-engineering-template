@@ -1,0 +1,11 @@
+# terraform initialization resources
+.terraform
+
+# notebooks for testing
+*.ipynb*
+
+# key pair files
+*.pem
+
+# environment file
+.env
