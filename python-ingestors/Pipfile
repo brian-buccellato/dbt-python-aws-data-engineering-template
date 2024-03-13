@@ -9,6 +9,10 @@ boto3 = "*"
 polars = "*"
 s3fs = "*"
 pyarrow = "*"
+pylint = "*"
+python-dotenv = "*"
+redshift-connector = "*"
+retry2 = "*"
 
 [dev-packages]
 
