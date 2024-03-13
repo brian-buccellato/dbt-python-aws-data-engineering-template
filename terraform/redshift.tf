@@ -22,8 +22,8 @@ resource "aws_iam_role" "redshift_default_iam" {
       }
     ]
   })
-  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonRedshiftAllCommandsFullAccess"]
-  tags = var.aws_tags
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonRedshiftAllCommandsFullAccess", "arn:aws:iam::aws:policy/AmazonS3FullAccess"]
+  tags                = var.aws_tags
 }
 
 # create the bastion host security group

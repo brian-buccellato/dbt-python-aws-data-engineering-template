@@ -1,7 +1,7 @@
 project_name = "ev-dbt-python-data-engineering"
 
 aws_tags = {
-  "project": var.project_name,
+  "project": "ev-dbt-python-data-engineering",
   "department": "Data Engineering",
   "managed_by_terraform": true
 }
