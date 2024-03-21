@@ -8,7 +8,7 @@ class ExampleJob(BaseJob):
     """Example class to demonstrate how to create a job."""
 
     url = "https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json"
-    table = "example"
+    table = "stock_transactions"
 
     def run(self) -> None:
         """Run the job."""
