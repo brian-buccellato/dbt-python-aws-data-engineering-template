@@ -6,7 +6,7 @@ data_warehouse:
       host: "{{ env_var('DBT_ENV_SECRET_REDSHIFT_HOST') }}"
       password: "{{ env_var('DBT_ENV_SECRET_REDSHIFT_PASSWORD') }}"
       port: 5439
-      schema: intermediate
+      schema: staging
       threads: 1
       type: redshift
       user: "{{ env_var('DBT_ENV_SECRET_REDSHIFT_USER') }}"

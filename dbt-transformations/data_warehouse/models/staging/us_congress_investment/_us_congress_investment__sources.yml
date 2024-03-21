@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: us_congress_investment
+    description: Information on investment activity by members of the US Congress
+    schema: raw_layer
+    tables:
+      - name: stock_transactions
+        columns:
+          - name: disclosure_date
+            description: Date the transaction was disclosed
+          - name: transaction_date
+            description: Date the transaction occurred
+          - name: owner
+            description: Name of the owner of the stock
+          - name: ticker
+            description: Stock ticker
+            tests:
+              - not_null
+          - name: asset_description
+            description: Description of the stock
+          - name: type
+            description: Type of transaction (buy, sell, etc.)
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['purchase', 'sale', 'sale_partial', 'exchange', 'sale_full']
+          - name: amount
+            description: Range of the amount of the transaction in USD, e.g. $1k - $15k
+            tests:
+              - not_null
+          - name: representative
+            description: Name of the congress person
+            tests:
+              - not_null
+          - name: district
+            description: District of the congress person
+          - name: state
+            description: US state the served by the congress person
+          - name: ptr_link
+            description: Link to the transaction on the US House of Representatives website
+            tests:
+              - not_null
+          - name: industry
+            description: Industry of the stock
+          - name: sector
+            description: Business sector of the stock
+          - name: party
+            description: Political party of the congress person
+          - name: disclosure_year
+            description: Year of the disclosure
+          - name: cap_gains_over_200_usd
+            description: Whether the transaction resulted in capital gains over $200
+
+
+
+
