@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: int_us_congress_transactions_fan_to_sales
+    config:
+      materialized: view
+  - name: int_us_congress_transactions_fan_to_purchases
+    config:
+      materialized: view
