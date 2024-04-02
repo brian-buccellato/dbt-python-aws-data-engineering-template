@@ -13,10 +13,7 @@ class GlobalConfig(SecretsManagerUtils):
     """Class for interacting with global configuration parameters"""
 
     def __init__(self) -> None:
-        try:
-            load_dotenv()
-        except Exception as error:
-            logger.info("No .env file found")
+        load_dotenv()
         super().__init__()
 
     @property

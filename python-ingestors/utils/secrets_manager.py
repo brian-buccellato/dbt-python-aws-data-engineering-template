@@ -5,6 +5,9 @@ import boto3
 from botocore.exceptions import ClientError
 
 
+# disabling as this class will add more methods in the future,
+# otherwise can be converted to a dataclass
+# pylint: disable=too-few-public-methods
 class SecretsManagerUtils:
     """Utility class for interacting with AWS Secrets Manager"""
 

@@ -1,9 +1,9 @@
 """This module contains utility functionality for interacting with polars"""
 
-import polars as pl
 import s3fs
+import polars as pl
 import pyarrow.dataset as ds
-import gzip
+
 
 class PolarsUtils:
     """Utility class for interacting with polars"""
