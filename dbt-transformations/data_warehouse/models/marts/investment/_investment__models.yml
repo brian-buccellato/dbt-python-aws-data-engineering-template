@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: sales
+    config:
+      materialized: table
+  - name: purchases
+    config:
+      materialized: table
