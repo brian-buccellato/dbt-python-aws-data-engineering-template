@@ -13,10 +13,10 @@ jobs:
         working-directory: ./python-ingestors
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
@@ -31,5 +31,7 @@ jobs:
         run: |
           pipenv install --ignore-pipfile --system
 
-      - name: Run pylint
-        run: pylint $(find . -name "*.py" | xargs)
+      - name: Lint Python
+        run: |
+          export PYTHONPATH=.
+          pylint $(find . -name "*.py" | xargs)
