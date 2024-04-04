@@ -68,11 +68,11 @@ resource "aws_key_pair" "bastion_kp" {
 }
 
 # save the file locally
-# resource "local_file" "bastion_ssh_key" {
-#   filename        = "${aws_key_pair.bastion_kp.key_name}.pem"
-#   content         = tls_private_key.bastion_pk.private_key_pem
-#   file_permission = "0400"
-# }
+resource "local_file" "bastion_ssh_key" {
+  filename        = "${aws_key_pair.bastion_kp.key_name}.pem"
+  content         = tls_private_key.bastion_pk.private_key_pem
+  file_permission = "0400"
+}
 
 # create the bastion host instance
 resource "aws_instance" "bastion" {

@@ -37,7 +37,6 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve
-            - name: Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
