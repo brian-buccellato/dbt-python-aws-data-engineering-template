@@ -43,6 +43,8 @@ jobs:
       PYTHON_ECS_TASK_DEFINITION: ./python-ingestors/python-ingestor-task-definition.json
       DBT_ECS_TASK_DEFINITION: ./dbt-transformations/dbt-transformations-task-definition.json
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
