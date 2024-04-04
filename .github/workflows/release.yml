@@ -1,0 +1,94 @@
+name: release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: us-east-1
+      ECS_CLUSTER: ev-dbt-python-data-engineering-ecs-cluster
+      ECR_PYTHON_REPOSITORY: ev-dbt-python-data-engineering-python-ingestors
+      ECR_DBT_REPOSITORY: ev-dbt-python-data-engineering-dbt-transformations
+      PYTHON_CONTAINER: ev-dbt-python-data-engineering-python-ingestors
+      DBT_CONTAINER: ev-dbt-python-data-engineering-dbt-transformations
+      PYTHON_ECS_TASK_DEFINITION: ./python-ingestors/python-ingestor-task-definition.json
+      DBT_ECS_TASK_DEFINITION: ./dbt-transformations/dbt-task-definition.json
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+      - name: Terraform Init
+        run: |
+          cd terraform
+          terraform init
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform apply -auto-approve
+            - name: Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Log into AWS ecr
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build and push python image to ecr
+        id: python-build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd python-ingestors
+          docker built -t $ECR_REGISTRY/$ECR_PYTHON_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_PYTHON_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_PYTHON_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: Update Python ECS task definition
+        id: python-update-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.PYTHON_ECS_TASK_DEFINITION }}
+          container-name: ${{ env.PYTHON_CONTAINER }}
+          image: ${{ steps.python-build-image.outputs.image }}
+      - name: Register Python ECS Task definition
+        uses: aws-actions/amazon-ecs-dploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.python-update-task-def.outputs.task-definition }}
+          cluster: ${{ env.ECS_CLUSTER }}
+      - name: Build and push dbt image to ecr
+        id: dbt-build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd dbt-transformations
+          docker built -t $ECR_REGISTRY/$ECR_DBT_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_DBT_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_DBT_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: Update DBT ECS task definition
+        id: dbt-update-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.DBT_ECS_TASK_DEFINITION }}
+          container-name: ${{ env.DBT_CONTAINER }}
+          image: ${{ steps.dbt-build-image.outputs.image }}
+      - name: Register DBT ECS Task definition
+        uses: aws-actions/amazon-ecs-dploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.dbt-update-task-def.outputs.task-definition }}
+          cluster: ${{ env.ECS_CLUSTER }}
+
