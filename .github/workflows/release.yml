@@ -65,7 +65,7 @@ jobs:
           container-name: ${{ env.PYTHON_CONTAINER }}
           image: ${{ steps.python-build-image.outputs.image }}
       - name: Register Python ECS Task definition
-        uses: aws-actions/amazon-ecs-dploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.python-update-task-def.outputs.task-definition }}
           cluster: ${{ env.ECS_CLUSTER }}
@@ -87,7 +87,7 @@ jobs:
           container-name: ${{ env.DBT_CONTAINER }}
           image: ${{ steps.dbt-build-image.outputs.image }}
       - name: Register DBT ECS Task definition
-        uses: aws-actions/amazon-ecs-dploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.dbt-update-task-def.outputs.task-definition }}
           cluster: ${{ env.ECS_CLUSTER }}
