@@ -100,6 +100,17 @@ resource "aws_vpc_security_group_ingress_rule" "redshift" {
   to_port                      = 5439
   description                  = "allow traffic from bastion host to redshift"
   referenced_security_group_id = aws_security_group.bastion.id
+  tags                         = var.aws_tags
+}
+
+resource "aws_vpc_security_group_ingress_rule" "redshift_from_ecs" {
+  security_group_id            = aws_security_group.redshift.id
+  ip_protocol                  = "tcp"
+  from_port                    = 5439
+  to_port                      = 5439
+  description                  = "allow traffic from ecs to redshift"
+  referenced_security_group_id = aws_security_group.ecs_task_sg.id
+  tags                         = var.aws_tags
 }
 
 # create the redshift cluster

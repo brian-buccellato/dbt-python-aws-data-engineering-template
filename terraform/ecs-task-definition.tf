@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_group" "log_for_ecs_cluster" {
   count             = length(var.ecs_task_type_names)
   name              = "/aws/ecs/${var.project_name}-${var.ecs_task_type_names[count.index]}"
   retention_in_days = var.log_retention_in_days
-  tags = var.aws_tags
+  tags              = var.aws_tags
 }
 
 resource "aws_iam_role" "ecs_task_execution_role" {
@@ -68,15 +68,15 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy_attachment"
 }
 
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  count              = length(var.ecs_task_type_names)
-  family             = "${var.project_name}-${var.ecs_task_type_names[count.index]}"
-  network_mode       = "awsvpc"
+  count                    = length(var.ecs_task_type_names)
+  family                   = "${var.project_name}-${var.ecs_task_type_names[count.index]}"
+  network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                = 512
-  memory             = 1024
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
-  task_role_arn      = aws_iam_role.ecs_task_execution_role.arn #?
-  tags = var.aws_tags
+  cpu                      = 512
+  memory                   = 1024
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  task_role_arn            = aws_iam_role.ecs_task_execution_role.arn #?
+  tags                     = var.aws_tags
 
   container_definitions = jsonencode([
     {
@@ -93,6 +93,23 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
     }
   ])
 
+}
+
+resource "aws_security_group" "ecs_task_sg" {
+  name        = "${var.project_name}-ecs-task-security-group"
+  description = "ECS task security group for dbt and python"
+  vpc_id      = aws_vpc.this.id
+  tags        = var.aws_tags
+}
+
+resource "aws_vpc_security_group_egress_rule" "ecs_task_sg" {
+  security_group_id            = aws_security_group.ecs_task_sg.id
+  ip_protocol                  = "tcp"
+  from_port                    = 5439
+  to_port                      = 5439
+  referenced_security_group_id = aws_security_group.redshift.id
+  description                  = "allow traffic out of ecs task security group on port 5439"
+  tags                         = var.aws_tags
 }
 
 output "log_group_name" {
