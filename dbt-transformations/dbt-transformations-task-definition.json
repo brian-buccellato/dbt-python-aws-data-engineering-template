@@ -1,0 +1,83 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:872287289339:task-definition/ev-dbt-python-data-engineering-dbt-transformations:2",
+    "containerDefinitions": [
+        {
+            "name": "ev-dbt-python-data-engineering-dbt-transformations",
+            "image": "872287289339.dkr.ecr.us-east-1.amazonaws.com/ev-dbt-python-data-engineering-dbt-transformations:latest",
+            "cpu": 0,
+            "portMappings": [],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/aws/ecs/ev-dbt-python-data-engineering-dbt-transformations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "ev-dbt-python-data-engineering-dbt-transformations",
+    "taskRoleArn": "arn:aws:iam::872287289339:role/ev-dbt-python-data-engineering-ecs-task-execution-role",
+    "executionRoleArn": "arn:aws:iam::872287289339:role/ev-dbt-python-data-engineering-ecs-task-execution-role",
+    "networkMode": "awsvpc",
+    "revision": 2,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024",
+    "registeredAt": "2024-03-06T16:00:09.478Z",
+    "registeredBy": "arn:aws:iam::872287289339:user/brian",
+    "tags": [
+        {
+            "key": "department",
+            "value": "Data Engineering"
+        },
+        {
+            "key": "managed_by_terraform",
+            "value": "true"
+        },
+        {
+            "key": "project",
+            "value": "ev-dbt-python-data-engineering"
+        }
+    ]
+}
