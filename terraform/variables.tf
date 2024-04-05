@@ -67,7 +67,7 @@ variable "redshift_master_username" {
 variable "redshift_publicly_accessible" {
   type        = bool
   description = "Whether the Redshift cluster is publicly accessible"
-  default     = false
+  default     = true
 }
 
 variable "redshift_whitelist_ips" {
