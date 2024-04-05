@@ -1,7 +1,9 @@
 # Create VPC
 resource "aws_vpc" "this" {
-  cidr_block       = var.vpc_cidr_block
-  instance_tenancy = "default"
+  cidr_block           = var.vpc_cidr_block
+  instance_tenancy     = "default"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
   tags = merge(var.aws_tags, {
     Name = "${var.project_name} VPC"
   })
@@ -75,13 +77,13 @@ resource "aws_nat_gateway" "nat" {
 
 output "vpc_id" {
   description = "value of the VPC ID"
-  value = aws_vpc.this.id
+  value       = aws_vpc.this.id
 }
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.nat.id
   }
   tags = merge(var.aws_tags, {
@@ -97,25 +99,25 @@ resource "aws_route_table_association" "private" {
 
 output "public_subnet_ids" {
   description = "value of the public subnet IDs"
-  value = aws_subnet.public_subnets[*].id
+  value       = aws_subnet.public_subnets[*].id
 }
 
 output "private_subnet_ids" {
   description = "value of the private subnet IDs"
-  value = aws_subnet.private_subnets[*].id
+  value       = aws_subnet.private_subnets[*].id
 }
 
 output "private_subnet_group_id" {
   description = "value of the private subnet group ID"
-  value = aws_redshift_subnet_group.private_subnet_group.id
+  value       = aws_redshift_subnet_group.private_subnet_group.id
 }
 
 output "availability_zones" {
   description = "value of the availability zones"
-  value = var.availability_zones
+  value       = var.availability_zones
 }
 
 output "redshift_subnet_group_id" {
   description = "value of the redshift subnet group ID"
-  value = aws_redshift_subnet_group.private_subnet_group.id
+  value       = aws_redshift_subnet_group.private_subnet_group.id
 }
