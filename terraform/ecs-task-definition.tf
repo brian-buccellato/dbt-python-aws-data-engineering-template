@@ -52,6 +52,7 @@ resource "aws_iam_policy" "ecs_task_execution_policy" {
           "s3:PutObject",
           "s3:ListBucket",
           "redshift:*",
+          "secretsmanager:*",
         ],
         Effect   = "Allow",
         Resource = "*"

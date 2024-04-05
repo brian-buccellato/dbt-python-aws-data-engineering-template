@@ -64,9 +64,35 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_eip" "nat" {
+  domain = "vpc"
+}
+
+resource "aws_nat_gateway" "nat" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = element(aws_subnet.public_subnets[*].id, 0)
+}
+
 output "vpc_id" {
   description = "value of the VPC ID"
   value = aws_vpc.this.id
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.this.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+  tags = merge(var.aws_tags, {
+    Name = "${var.project_name} Private Route Table"
+  })
+}
+
+resource "aws_route_table_association" "private" {
+  count          = length(var.private_subnet_cidrs)
+  subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
+  route_table_id = aws_route_table.private.id
 }
 
 output "public_subnet_ids" {
