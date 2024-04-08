@@ -1,0 +1,3 @@
+### Terraform IaC
+
+This repository contains the Terraform code to create the infrastructure for the project.  The resources are organized into services from the project's perspective rather than the cloud provider's perspective.  For example, you will find all of the IAM roles and policies for Redshift in the redshift folder.  This makes it easier to understand the resources that are used by each service.
