@@ -23,6 +23,8 @@ The `data_warehouse` project, which builds on the example job in the python inge
 
 1. run `dbt debug` to test the connection to the redshift cluster (you will need the port forwarding set up as described in the project root [README](../README.md)).
 
+1. As is the case with the python ingestors project, you will need to create the necessary Redshift schemas and permissions to run the dbt transformations.
+
 ### Project Structure
 As mentioned, the `data_warehouse` project is structured to be a simplistic example based on DBT best practices.  However, in order to fully appreciate how to properly structure a DBT project, follow the readme's in the individual stages of the pipeline.
 - [staging](./data_warehouse/models/staging/README.md)

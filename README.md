@@ -67,5 +67,16 @@ see: [python-ingestors](./python-ingestors/README.md) and [dbt-transformations](
 #### CI/CD:
 This project uses github actions to update infrastructure and to deploy the task definitions to ECS.  The actions are triggered by creating releases and are defined in the .github/workflows directory.
 
+In order for the actions to run, the following secrets must be added to the repository:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
+And the following variables must be set in the repository:
+- AWS_REGION (the region where the resources are created)
+- ECS_CLUSTER (the name of the ECS cluster)
+- ECR_PYTHON_REPOSITORY (the name of the ECR repository for the python ingestors)
+- ECR_DBT_REPOSITORY (the name of the ECR repository for the dbt transformations)
+- PYTHON_CONTAINER (the name of the container in the ECR repository for the python ingestors)
+- DBT_CONTAINER (the name of the container in the ECR repository for the dbt transformations)
+
 #### Cleaning up:
 1. Run `terraform destroy` to delete all resources.

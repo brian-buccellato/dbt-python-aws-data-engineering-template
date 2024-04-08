@@ -34,12 +34,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: update-infrastructure
     env:
-      AWS_REGION: us-east-1
-      ECS_CLUSTER: ev-dbt-python-data-engineering-ecs-cluster
-      ECR_PYTHON_REPOSITORY: ev-dbt-python-data-engineering-python-ingestors
-      ECR_DBT_REPOSITORY: ev-dbt-python-data-engineering-dbt-transformations
-      PYTHON_CONTAINER: ev-dbt-python-data-engineering-python-ingestors
-      DBT_CONTAINER: ev-dbt-python-data-engineering-dbt-transformations
+      AWS_REGION: ${{ var.AWS_REGION }}
+      ECS_CLUSTER: ${{ var.ECS_CLUSTER }}
+      ECR_PYTHON_REPOSITORY: ${{ var.ECR_PYTHON_REPOSITORY }}
+      ECR_DBT_REPOSITORY: ${{ var.ECR_DBT_REPOSITORY }}
+      PYTHON_CONTAINER: ${{ var.PYTHON_CONTAINER }}
+      DBT_CONTAINER: ${{ var.DBT_CONTAINER }}
       PYTHON_ECS_TASK_DEFINITION: ./python-ingestors/python-ingestor-task-definition.json
       DBT_ECS_TASK_DEFINITION: ./dbt-transformations/dbt-transformations-task-definition.json
     steps:
