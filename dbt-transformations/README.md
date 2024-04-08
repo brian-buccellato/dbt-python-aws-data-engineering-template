@@ -23,3 +23,11 @@ The `data_warehouse` project, which builds on the example job in the python inge
 
 1. run `dbt debug` to test the connection to the redshift cluster (you will need the port forwarding set up as described in the project root [README](../README.md)).
 
+### Project Structure
+As mentioned, the `data_warehouse` project is structured to be a simplistic example based on DBT best practices.  However, in order to fully appreciate how to properly structure a DBT project, follow the readme's in the individual stages of the pipeline.
+- [staging](./data_warehouse/models/staging/README.md)
+- [intermediate](./data_warehouse/models/intermediate/readme.md)
+- [marts](./data_warehouse/models/marts/readme.md)
+
+### ECS Setup
+1. In the AWS console, Navigate to the task definition created for the dbt-transformations service.  Copy the task definition as json and paste it into ./dbt-transformations-task-definition.json.  This is needed for the github action to create revisions on deployments.

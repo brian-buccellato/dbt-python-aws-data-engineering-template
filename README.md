@@ -64,5 +64,8 @@ This project creates:
 #### Running locally:
 see: [python-ingestors](./python-ingestors/README.md) and [dbt-transformations](./dbt-transformations/README.md)
 
+#### CI/CD:
+This project uses github actions to update infrastructure and to deploy the task definitions to ECS.  The actions are triggered by creating releases and are defined in the .github/workflows directory.
+
 #### Cleaning up:
 1. Run `terraform destroy` to delete all resources.

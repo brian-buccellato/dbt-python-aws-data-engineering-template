@@ -16,3 +16,6 @@ In the intermediate layer, we focus on the following types of transformation log
 
 ### Materialization
 Intermediate models should be materialized either ephemerally or as views.  Ephemeral materialization is the simplest route and will keep unnecessary models out of your warehouse.  However, ephemerals are basically just interpolations of CTEs and thus not directly queryable (although the models that `ref()` them can "query" them as if they were tables/views), making them more difficult to debug.  Materializing your models as views in a dedicated schema with specific permissions gives added insight and makes for easier troubleshooting with the tradeoff of added complexity in both setup and warehouse space.
+
+### Reference
+https://docs.getdbt.com/best-practices/how-we-structure/3-intermediate

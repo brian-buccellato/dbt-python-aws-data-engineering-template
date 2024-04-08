@@ -25,3 +25,5 @@ Marts models should be materialized as tables or incremental models.  This gives
 ### Don'ts
 - Create a mart with too many joins  Do not bring together too many concepts into a single mart.  While this isn’t a hard rule, if you’re bringing together more than 4 or 5 concepts to create your mart, you may benefit from adding some intermediate models for added clarity. Two intermediate models that bring together three concepts each, and a mart that brings together those two intermediate models, will typically result in a much more readable chain of logic than a single mart with six joins.
 
+### Reference
+https://docs.getdbt.com/best-practices/how-we-structure/4-marts

@@ -26,3 +26,6 @@ Staging models are not intended to be final artifacts themselves, but rather bui
 - Any downstream model (discussed more in marts) referencing our staging models will always get the freshest data possible from all of the component views it’s pulling together and materializing
 
 - It avoids wasting space in the warehouse on models that are not intended to be queried by data consumers, and thus do not need to perform as quickly or efficiently
+
+### Reference
+https://docs.getdbt.com/best-practices/how-we-structure/2-staging
