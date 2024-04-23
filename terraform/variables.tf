@@ -80,3 +80,9 @@ variable "bastion_instance_type" {
   description = "The instance type for the bastion host"
   default     = "t2.micro"
 }
+
+variable "airflow_version" {
+  type        = string
+  description = "The version of Apache Airflow to use"
+  default     = "2.8.1"
+}

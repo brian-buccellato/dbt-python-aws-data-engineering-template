@@ -70,6 +70,7 @@ This project uses github actions to update infrastructure and to deploy the task
 In order for the actions to run, the following secrets must be added to the repository:
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
+
 And the following variables must be set in the repository:
 - AWS_REGION (the region where the resources are created)
 - ECS_CLUSTER (the name of the ECS cluster)
