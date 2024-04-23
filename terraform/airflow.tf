@@ -13,7 +13,7 @@ resource "aws_s3_bucket_versioning" "airflow_dags" {
   }
 }
 
-# idk if this is right but whatever
+
 resource "aws_iam_role" "airflow_execution_role" {
   name = "${var.project_name}-airflow-execution-role"
   assume_role_policy = jsonencode({
