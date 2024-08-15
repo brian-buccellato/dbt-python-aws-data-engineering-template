@@ -1,8 +1,9 @@
+# backend bucket and dynamo table to be manually configured
 terraform {
   backend "s3" {
-    bucket         = "ev-dbt-python-state-store"
+    bucket         = ""
     key            = "network/terraform.tfstate"
-    dynamodb_table = "ev-dbt-python-state-lock"
+    dynamodb_table = ""
     region         = "us-east-1"
   }
   required_providers {
